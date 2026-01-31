@@ -1,5 +1,7 @@
 const { TaskSchema, validateTask } = require("./taskValidator");
 
+//TODO: Write missing edge cases for status and priority fields
+
 describe("validateTask", () => {
   describe("title validation", () => {
     test("should pass when title is valid", () => {
