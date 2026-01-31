@@ -27,7 +27,6 @@ describe("validateTask", () => {
       const result = validateTask(TaskSchema, invalidTask);
 
       expect(result.isValid).toBe(false);
-      expect(result.errors.length).toBeGreaterThan(0);
       expect(result.errors).toContain(`Field "title" is required.`);
     });
 
@@ -41,7 +40,6 @@ describe("validateTask", () => {
       const result = validateTask(TaskSchema, invalidTask);
 
       expect(result.isValid).toBe(false);
-      expect(result.errors.length).toBeGreaterThan(0);
       expect(result.errors).toContain(
         `Field "title" must be between 3 and 100 characters long.`,
       );
@@ -57,7 +55,6 @@ describe("validateTask", () => {
       const result = validateTask(TaskSchema, invalidTask);
 
       expect(result.isValid).toBe(false);
-      expect(result.errors.length).toBeGreaterThan(0);
       expect(result.errors).toContain(
         `Field "title" must be between 3 and 100 characters long.`,
       );
@@ -88,7 +85,6 @@ describe("validateTask", () => {
       const result = validateTask(TaskSchema, invalidTask);
 
       expect(result.isValid).toBe(false);
-      expect(result.errors.length).toBeGreaterThan(0);
       expect(result.errors).toContain(
         `Field "status" must be one of: pending, in-progress, completed.`,
       );
@@ -103,7 +99,6 @@ describe("validateTask", () => {
       const result = validateTask(TaskSchema, invalidTask);
 
       expect(result.isValid).toBe(false);
-      expect(result.errors.length).toBeGreaterThan(0);
       expect(result.errors).toContain(`Field "status" is required.`);
     });
   });
@@ -133,7 +128,6 @@ describe("validateTask", () => {
       const result = validateTask(TaskSchema, invalidTask);
 
       expect(result.isValid).toBe(false);
-      expect(result.errors.length).toBeGreaterThan(0);
       expect(result.errors).toContain(
         `Field "priority" must be one of: low, medium, high.`,
       );
@@ -148,7 +142,6 @@ describe("validateTask", () => {
       const result = validateTask(TaskSchema, invalidTask);
 
       expect(result.isValid).toBe(false);
-      expect(result.errors.length).toBeGreaterThan(0);
       expect(result.errors).toContain(`Field "priority" is required.`);
     });
   });
@@ -178,7 +171,6 @@ describe("validateTask", () => {
       const result = validateTask(TaskSchema, invalidTask);
 
       expect(result.isValid).toBe(false);
-      expect(result.errors.length).toBeGreaterThan(0);
       expect(result.errors).toContain(
         `Field "description" must be between 0 and 500 characters long.`,
       );
