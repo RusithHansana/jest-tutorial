@@ -45,6 +45,19 @@ describe("validateTask", () => {
       );
     });
 
+    test("should fail when title is null", () => {
+      const invalidTask = {
+        title: null,
+        status: "pending",
+        priority: "high",
+      };
+
+      const result = validateTask(TaskSchema, invalidTask);
+
+      expect(result.isValid).toBe(false);
+      expect(result.errors).toContain(`Field "title" is required.`);
+    });
+
     test("should fail when title is too short( < 3)", () => {
       const invalidTask = {
         title: "ab",
