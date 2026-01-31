@@ -58,6 +58,19 @@ describe("validateTask", () => {
       expect(result.errors).toContain(`Field "title" is required.`);
     });
 
+    test("should fail when title is not a string", () => {
+      const invalidTask = {
+        title: 123,
+        status: "pending",
+        priority: "high",
+      };
+
+      const result = validateTask(TaskSchema, invalidTask);
+
+      expect(result.isValid).toBe(false);
+      expect(result.errors).toContain(`Field "title" must be of type string.`);
+    });
+
     test("should fail when title is too short( < 3)", () => {
       const invalidTask = {
         title: "ab",
