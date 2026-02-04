@@ -144,6 +144,34 @@ describe("validateTask", () => {
       expect(result.isValid).toBe(false);
       expect(result.errors).toContain(`Field "status" is required.`);
     });
+
+    test("should fail when status is empty string", () => {
+      const invalidTask = {
+        title: "Task with empty status",
+        status: "",
+        priority: "medium",
+      };
+
+      const result = validateTask(TaskSchema, invalidTask);
+
+      expect(result.isValid).toBe(false);
+      expect(result.errors).toContain(
+        `Field "status" must be one of: pending, in-progress, completed.`,
+      );
+    });
+
+    test("should fail when status is null", () => {
+      const invalidTask = {
+        title: "Task with null status",
+        status: null,
+        priority: "medium",
+      };
+
+      const result = validateTask(TaskSchema, invalidTask);
+
+      expect(result.isValid).toBe(false);
+      expect(result.errors).toContain(`Field "status" is required.`);
+    });
   });
 
   describe("priority validation", () => {
@@ -180,6 +208,34 @@ describe("validateTask", () => {
       const invalidTask = {
         title: "Task with missing priority",
         status: "pending",
+      };
+
+      const result = validateTask(TaskSchema, invalidTask);
+
+      expect(result.isValid).toBe(false);
+      expect(result.errors).toContain(`Field "priority" is required.`);
+    });
+
+    test("should fail when priority is empty string", () => {
+      const invalidTask = {
+        title: "Task with empty priority",
+        status: "pending",
+        priority: "",
+      };
+
+      const result = validateTask(TaskSchema, invalidTask);
+
+      expect(result.isValid).toBe(false);
+      expect(result.errors).toContain(
+        `Field "priority" must be one of: low, medium, high.`,
+      );
+    });
+
+    test("should fail when priority is null", () => {
+      const invalidTask = {
+        title: "Task with null priority",
+        status: "pending",
+        priority: null,
       };
 
       const result = validateTask(TaskSchema, invalidTask);
