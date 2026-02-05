@@ -95,6 +95,16 @@ function validateTask(taskSchema, taskData) {
           : `Field "${fieldName}" is invalid.`;
       errors.push(errorMessage);
     }
+
+    // Validation for extra fields (not defined in the schema)
+    const validFields = Object.keys(taskSchema);
+    const extraFields = Object.keys(taskData).filter(
+      (key) => !validFields.includes(key),
+    );
+
+    if (extraFields.length > 0) {
+      errors.push(`Extra fields are not allowed: ${extraFields.join(", ")}.`);
+    }
   });
 
   return {

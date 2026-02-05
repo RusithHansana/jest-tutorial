@@ -1,7 +1,5 @@
 const { TaskSchema, validateTask } = require("./taskValidator");
 
-//TODO: Write missing edge cases for status and priority fields
-
 describe("validateTask", () => {
   describe("title validation", () => {
     test("should pass when title is valid", () => {
@@ -272,6 +270,24 @@ describe("validateTask", () => {
       expect(result.isValid).toBe(false);
       expect(result.errors).toContain(
         `Field "description" must be between 0 and 500 characters long.`,
+      );
+    });
+  });
+
+  describe("extra fields validation", () => {
+    test("should fail when extra fields are present", () => {
+      const invalidTask = {
+        title: "Task with extra field",
+        status: "pending",
+        priority: "medium",
+        extraField: "Something interesting",
+      };
+
+      const result = validateTask(TaskSchema, invalidTask);
+
+      expect(result.isValid).toBe(false);
+      expect(result.errors).toContain(
+        `Extra fields are not allowed: extraField.`,
       );
     });
   });
