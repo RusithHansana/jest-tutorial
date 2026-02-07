@@ -1,36 +1,24 @@
-/**
- * Task Repository - Handles database operations
- * In production, this would use a real database (PostgreSQL, MongoDB, etc.)
- */
-class TaskRepository {
-  constructor(database) {
-    this.db = database;
+const { validateTask, TaskSchema } = require("./taskValidator");
+
+class TaskService {
+  constructor(taskRepository) {
+    this.repository = taskRepository;
   }
 
-  async create(taskData) {
-    // In production: INSERT INTO tasks ...
-    // Returns the created task with id and timestamps
-  }
-
-  async findById(taskId) {
-    // In production: SELECT * FROM tasks WHERE id = ?
-    // Returns task object or null
-  }
-
-  async findAll(filters = {}) {
-    // In production: SELECT * FROM tasks WHERE ...
-    // Returns array of tasks
-  }
-
-  async update(taskId, updates) {
-    // In production: UPDATE tasks SET ... WHERE id = ?
-    // Returns updated task or null if not found
-  }
-
-  async delete(taskId) {
-    // In production: DELETE FROM tasks WHERE id = ?
-    // Returns true if deleted, false if not found
+  /**
+   * Creates a new task
+   * Business rules:
+   * 1. Validate task data
+   * 2. Add metadata (createdAt, id from DB)
+   * 3. Save to database via repository
+   */
+  async createTask(taskData) {
+    const { isValid, errors } = validateTask(TaskSchema, taskData);
+    if (!isValid) {
+      throw new Error(`Validation failed: ${errors.join(", ")}`);
+    }
+    return await this.repository.create(taskData);
   }
 }
 
-module.exports = TaskRepository;
+module.exports = TaskService;

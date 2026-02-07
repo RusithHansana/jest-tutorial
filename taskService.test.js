@@ -23,7 +23,7 @@ describe("TaskService", () => {
       };
 
       // ACT
-      const result = await taskService.create(validTaskData);
+      const result = await taskService.createTask(validTaskData);
 
       // ASSERT
       expect(result).toEqual({
@@ -40,6 +40,29 @@ describe("TaskService", () => {
     });
 
     // Test for invalid task data
+    test("should throw validation error when data is invalid", async () => {
+      const mockRepository = {
+        create: jest.fn().mockResolvedValue({
+          id: 1,
+          title: "Test task",
+          status: "pending",
+          priority: "high",
+          createdAt: new Date("2025-02-07"),
+        }),
+      };
+
+      const taskService = new TaskService(mockRepository);
+
+      const invalidTaskData = {
+        title: "Te", // too short
+        status: "unknown", // invalid status
+        priority: "high",
+      };
+
+      const result = taskService.createTask(invalidTaskData);
+
+      // TODO: Complete the test to expect an error
+    });
     // Test should verify that repository.create is NOT called
 
     // Test for repository errors
